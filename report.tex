@@ -15,7 +15,7 @@
 \maketitle
 
 \section{Introduction}
-Same as Milestone 1, with the Gaming and Mental Health dataset, we have 2,000 samples total, keeping 1,600 for training and 400 for testing. We want to predict two targets. First, we predict the continuous addiction score (0 to 10). Second, we classify the general addiction level into Low, Medium, or High. 
+Same as Milestone 1, with the Gaming and Mental Health dataset, we have 2,000 samples total, keeping 1,600 for training and 400 for testing. We want to predict two targets. First, we predict the continuous addiction score (0 to 10). Second, we classify the general addiction level into Low, Medium, or High.
 
 This time around, we are stepping up our game. We coded a Multi-Layer Perceptron (MLP) from scratch for both tasks. We also implemented K-Means clustering for classification. It was a ton of work, but discovering how these models behave was super exciting!
 
@@ -61,26 +61,26 @@ We swept $K$ from 1 to 20 on the validation set.
 The accuracy peaked at $K=5$, reaching 73.12\% with a Macro F1 score of 0.4172. But we noticed a really cool trade-off! At $K=18$, the accuracy dropped slightly to 70.94\%, but the Macro F1 score shot up to 0.5943. It turns out more clusters let the model represent minority groups instead of letting them get outvoted. Quite neat!
 
 \subsection{MLP Classification}
-We tested learning rates $lr \in [10^{-4}, 0.5]$ and epochs $\in [50, 500]$ with a 64-neuron hidden layer.
+We tested our MLP classifier (hidden size = 64, learning rate $lr=0.01$) across epochs $\in [50, 500]$ to compare standard SGD against our Momentum implementation ($\gamma = 0.9$).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{mlp_class_heatmap.png}
-    \caption{MLP Classification Accuracy Heatmap}
+    \includegraphics[width=0.85\linewidth]{mlp_class_comparison.png}
+    \caption{MLP Classification: SGD vs Momentum Validation Accuracy}
 \end{figure}
 
-We hit the jackpot at $lr=0.01$ and 500 epochs, scoring a sweet 76.56\% validation accuracy (F1 = 0.4541). High learning rates like 0.5 were all over the place, while a low $lr=10^{-4}$ was slow as molasses.
+We hit the jackpot with Momentum! It reached a validation accuracy of 75.94\% at just 100 epochs. Standard SGD required a full 500 epochs to reach that same level. Momentum adds inertia to the update step, which accelerates training and dampens oscillations in narrow loss valleys.
 
 \subsection{MLP Regression}
-We tuned the regressor on the continuous addiction score task.
+We tuned the regressor (hidden size = 64, learning rate $lr=0.001$) on the continuous addiction score task.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{mlp_reg_heatmap.png}
-    \caption{MLP Regression MSE Heatmap (Lower is Better)}
+    \includegraphics[width=0.85\linewidth]{mlp_reg_comparison.png}
+    \caption{MLP Regression: SGD vs Momentum Validation MSE}
 \end{figure}
 
-Our default baseline ($lr=10^{-5}$, 100 epochs) got a validation MSE of 5.2136. Tuning made a massive difference! We achieved a solid validation MSE of 1.1500 at $lr=0.001$ and 200 epochs. Going up to $lr=0.01$ or higher caused the model to overfit and go off the rails.
+Tuning made a massive difference. Standard SGD steadily converged to a validation MSE of 1.1732 at 200 epochs. Momentum was faster at the start, achieving a low MSE of 1.2218 at 50 epochs (compared to SGD's 1.3580). However, at higher epochs, Momentum overshot the mark and diverged (MSE rose to 2.0752). This is a classic gradient descent limitation where too much inertia pushes the model past the local minimum.
 
 \subsection{Summary of Results}
 The table below displays the final performance of our optimized Milestone 2 models.
@@ -94,8 +94,8 @@ Task & Model (Parameters) & Performance \\
 \midrule
 Classification & K-Means ($K=5$) & Acc: 73.12\%, F1: 0.4172 \\
 Classification & K-Means ($K=18$) & Acc: 70.94\%, F1: 0.5943 \\
-Classification & MLP ($lr=0.01$, ep=500) & Acc: 76.56\%, F1: 0.4541 \\
-Regression & MLP ($lr=0.001$, ep=200) & MSE: 1.1500 \\
+Classification & MLP + Momentum (ep=100) & Acc: 75.94\%, F1: 0.4556 \\
+Regression & MLP + SGD (ep=200) & MSE: 1.1732 \\
 \bottomrule
 \end{tabular}%
 }
@@ -105,12 +105,19 @@ Regression & MLP ($lr=0.001$, ep=200) & MSE: 1.1500 \\
 \section{Extensions}
 We tried three extra extensions to squeeze more juice out of our pipeline:
 \begin{itemize}
+    \item \textbf{Momentum Optimizer (Slide 69):} We added inertia to parameter updates:
+      \begin{equation}
+          \mathbf{v} \leftarrow \gamma \mathbf{v} + \eta \nabla R(\mathbf{W})
+      \end{equation}
+      \begin{equation}
+          \mathbf{W} \leftarrow \mathbf{W} - \mathbf{v}
+      \end{equation}
+      This damped oscillations and dramatically accelerated classification convergence.
     \item \textbf{Categorical Cross-Entropy from Scratch:} We implemented multi-class cross-entropy and its gradient vectorization from scratch.
     \item \textbf{Deep MLP Architectures:} We tested a deep network configuration of $(D, 64, 32, C)$. Surprisingly, it did not help much and overfit the training set.
-    \item \textbf{Mini-Batch Shuffling:} Shuffling the data indices before each epoch prevented the network from getting stuck in cyclic gradient updates.
 \end{itemize}
 
 \section{Discussion and Conclusion}
-We successfully implemented and tuned all methods. For regression, the MLP achieved a solid 1.1500 MSE. Non-linear mapping is definitely the way to go here. For classification, MLP beat K-Means (76.56\% vs 73.12\%). Supervised models have a clear edge since they know the target labels. In conclusion, tuning was a game-changer! We are super proud of these results and look forward to Milestone 3!
+We successfully implemented and tuned all methods. For regression, the MLP achieved a solid 1.1732 MSE. Non-linear mapping is definitely the way to go here. For classification, MLP beat K-Means (75.94\% vs 73.12\%). Supervised models have a clear edge since they know the target labels. In conclusion, adding momentum was a game-changer for speed, but required careful tuning to avoid overshooting. We look forward to Milestone 3!
 
 \end{document}
