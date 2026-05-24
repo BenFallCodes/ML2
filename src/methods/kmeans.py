@@ -8,7 +8,7 @@ class KMeans(object):
     We also use it to make prediction by attributing labels to clusters.
     """
 
-    def __init__(self, K, max_iters=100, init="kmeans++", n_init=10, tolerance=1e-4):
+    def __init__(self, K, max_iters=100):
         """
         Initialize the new object (see dummy_methods.py)
         and set its arguments.
@@ -16,83 +16,45 @@ class KMeans(object):
         Arguments:
             K (int): number of clusters
             max_iters (int): maximum number of iterations
-            init (str): initialization method, either "kmeans++" or "random"
-            n_init (int): number of times the algorithm will be run with different centroid seeds
-            tolerance (float): relative tolerance with regards to Frobenius norm of the difference
-                               in the cluster centers of two consecutive iterations to declare convergence
         """
 
         self.K = K
         self.max_iters = max_iters
-        self.init_method = init
-        self.n_init = n_init
-        self.tolerance = tolerance
 
 
     def init_centers(self, data):
         """
-        Pick K data points from the data as initial cluster centers.
-        Supports both random selection and KMeans++.
+        Randomly pick K data points from the data as initial cluster centers.
 
         Arguments:
-            data: array of shape (NxD) where N is the number of data points and D is the number of features.
+            data: array of shape (NxD) where N is the number of data points and D is the number of features (:=pixels).
+            K: int, the number of clusters.
         Returns:
             centers: array of shape (KxD) of initial cluster centers
         """
-        if self.init_method == "random":
-            random_idx = np.random.permutation(data.shape[0])[:self.K]
-            centers = data[random_idx]
-            return centers
-        elif self.init_method == "kmeans++":
-            N, D = data.shape
-            centers = np.empty((self.K, D))
-            
-            # 1. Randomly select the first center
-            first_idx = np.random.randint(N)
-            centers[0] = data[first_idx]
-            
-            # 2. Select the remaining K-1 centers
-            for k in range(1, self.K):
-                # Compute distances from all points to the centers already selected
-                distances = self.compute_distance(data, centers[:k])
-                # Get the minimum distance squared for each point
-                min_distances_sq = np.min(distances, axis=1) ** 2
-                
-                # Proportional probability distribution
-                sum_dist = np.sum(min_distances_sq)
-                if sum_dist == 0:
-                    probabilities = np.ones(N) / N
-                else:
-                    probabilities = min_distances_sq / sum_dist
-                
-                next_idx = np.random.choice(N, p=probabilities)
-                centers[k] = data[next_idx]
-            return centers
-        else:
-            raise ValueError(f"Unknown initialization method: {self.init_method}")
+
+        random_idx = np.random.permutation(data.shape[0])[:self.K]
+        centers = data[random_idx[:self.K]]
+        return centers
 
     def compute_distance(self, data, centers):
         """
         Compute the euclidean distance between each datapoint and each center.
-        Fully vectorized using matrix math to avoid python loops.
 
         Arguments:
-            data: array of shape (N, D) where N is the number of data points, D is the number of features.
+            data: array of shape (N, D) where N is the number of data points, D is the number of features (:=pixels).
             centers: array of shape (K, D), centers of the K clusters.
         Returns:
             distances: array of shape (N, K) with the distances between the N points and the K clusters.
         """
-        # Ensure centers is 2D
-        centers = np.atleast_2d(centers)
-        
-        # ||x - y||^2 = ||x||^2 + ||y||^2 - 2 <x, y>
-        data_sq = np.sum(data ** 2, axis=1, keepdims=True)  # Shape (N, 1)
-        centers_sq = np.sum(centers ** 2, axis=1)          # Shape (K,)
-        dot_prod = np.dot(data, centers.T)                 # Shape (N, K)
-        
-        distances_sq = data_sq + centers_sq - 2 * dot_prod
-        # Clip to 0 to prevent negative values due to floating-point precision issues
-        distances = np.sqrt(np.maximum(distances_sq, 0))        return distances
+
+        N = data.shape[0]
+        K_centers = centers.shape[0]
+        distances = np.zeros((N, K_centers))
+        for k in range(K_centers):
+            center = centers[k]
+            distances[:, k] = np.sqrt(((data - center) ** 2).sum(axis=1))
+        return distances
 
 
     def find_closest_cluster(self, distances):
@@ -116,6 +78,7 @@ class KMeans(object):
         Arguments:
             data: data array of shape (N,D), where N is the number of samples, D is number of features
             cluster_assignments: the assigned cluster of each data sample as returned by find_closest_cluster(), shape is (N,)
+            K: the number of clusters
         Returns:
             centers: the new centers of each cluster, shape is (K,D) where K is the number of clusters, D the number of features
         """
@@ -128,25 +91,10 @@ class KMeans(object):
                 centers[k] = np.mean(data[cluster_assignments == k], axis=0)
         return centers
 
-    def compute_inertia(self, data, centers, cluster_assignments):
-        """
-        Compute the inertia (sum of squared distances to closest center).
-
-        Arguments:
-            data: array of shape (N, D)
-            centers: array of shape (K, D)
-            cluster_assignments: array of shape (N,)
-        Returns:
-            inertia (float): sum of squared distances to closest center
-        """
-        distances = self.compute_distance(data, centers)
-        closest_distances = distances[np.arange(data.shape[0]), cluster_assignments]
-        return np.sum(closest_distances ** 2)
 
     def k_means(self, data, max_iter=100):
         """
         Main K-Means algorithm that performs clustering of the data.
-        Runs multiple restarts and selects the one with minimum inertia.
 
         Arguments:
             data (array): shape (N,D) where N is the number of data samples, D is number of features.
@@ -155,32 +103,16 @@ class KMeans(object):
             centers (array): shape (K,D), the final cluster centers.
             cluster_assignments (array): shape (N,) final cluster assignment for each data point.
         """
-        best_inertia = float('inf')
-        best_centers = None
-        best_assignments = None
 
-        for attempt in range(self.n_init):
-            centers = self.init_centers(data)
-            cluster_assignments = None
-            for i in range(max_iter):
-                old_centers = centers.copy()
-                distances = self.compute_distance(data, centers)
-                cluster_assignments = self.find_closest_cluster(distances)
-                centers = self.compute_centers(data, cluster_assignments)
-                if np.allclose(old_centers, centers, atol=self.tolerance):
-                    break
-            
-            if cluster_assignments is None:
-                distances = self.compute_distance(data, centers)
-                cluster_assignments = self.find_closest_cluster(distances)
-                
-            inertia = self.compute_inertia(data, centers, cluster_assignments)
-            if inertia < best_inertia:
-                best_inertia = inertia
-                best_centers = centers
-                best_assignments = cluster_assignments
-
-        return best_centers, best_assignments
+        centers = self.init_centers(data)
+        for i in range(max_iter):
+            old_centers = centers.copy()
+            distances = self.compute_distance(data, centers)
+            cluster_assignments = self.find_closest_cluster(distances)
+            centers = self.compute_centers(data, cluster_assignments)
+            if np.all(old_centers == centers):
+                break
+        return centers, cluster_assignments
 
     def assign_labels_to_centers(self, centers, cluster_assignments, true_labels):
         """
