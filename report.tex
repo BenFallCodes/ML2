@@ -1,12 +1,12 @@
 \documentclass[11pt, twocolumn]{article}
-\usepackage[margin=0.75in]{geometry}
+\usepackage[margin=0.7in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage[font=small,labelfont=bf]{caption}
 
-\title{\vspace{-10mm}\Large\textbf{Milestone 2 Report}}
+\title{\vspace{-12mm}\Large\textbf{Milestone 2 Report}}
 \author{SCIPER 392412 $\cdot$ 373176 $\cdot$ 398388}
 \date{}
 
@@ -14,66 +14,80 @@
 
 \maketitle
 
-\begin{figure*}[htbp]
-    \centering
-    \includegraphics[width=0.44\textwidth]{mlp_class_heatmap.png}
-    \hfill
-    \includegraphics[width=0.44\textwidth]{mlp_reg_heatmap.png}
-    \caption{MLP validation performance: Classification Accuracy (left) and Regression MSE (right)}
-\end{figure*}
-
 \section{Introduction}
-We are back with the Gaming and Mental Health dataset! Quick recap: we have 2,000 samples total, keeping 1,600 for training and 400 for testing. 
+Same as Milestone 1, with the Gaming and Mental Health dataset, we have 2,000 samples total, keeping 1,600 for training and 400 for testing. We want to predict two targets. First, we predict the continuous addiction score (0 to 10). Second, we classify the general addiction level into Low, Medium, or High. 
 
-Our two tasks remain the same. First, we predict the continuous addiction score (0 to 10). Second, we classify players into Low, Medium, or High addiction levels. For this milestone, we ditch the simple models from Milestone 1 and build a Multi-Layer Perceptron (MLP) and a K-Means clustering algorithm from scratch. We had a total blast coding these up and playing with their settings!
+This time around, we are stepping up our game. We coded a Multi-Layer Perceptron (MLP) from scratch for both tasks. We also implemented K-Means clustering for classification. It was a ton of work, but discovering how these models behave was super exciting!
 
 \section{Methods}
-We prepared the data by normalising it with the mean and standard deviation of our training set. To avoid cheating (data leakage!), we carved out an 80/20 train/validation split from our 1,600 training samples. This left us with 1,280 samples for training and 320 for validation.
+We prepared the data by applying standard z-score normalization. We calculated means and standard deviations from the training set only. To avoid data leakage, we split our 1,600 training samples into an 80/20 train/validation split. This leaves 1,280 samples for training and 320 for local tuning.
 
 \subsection{Multi-Layer Perceptron (MLP)}
-Our neural net is written entirely from scratch. Weights are initialized using a normal distribution scaled by $1 / \sqrt{I}$ (where $I$ is the input dimension), and biases start at zero.
+Our MLP is built completely from scratch. The network supports arbitrary hidden layers. We initialize weights using a normal distribution scaled by $1 / \sqrt{I}$, where $I$ is the input dimension. Biases start at zero.
 
-The forward pass runs layer-by-layer: $\mathbf{A}^{(l)} = \mathbf{Z}^{(l-1)}\mathbf{W}^{(l)\top} + \mathbf{b}^{(l)}$ followed by the activation $\mathbf{Z}^{(l)} = \sigma^{(l)}(\mathbf{A}^{(l)})$, where $\mathbf{Z}^{(0)}$ is the input. We coded both ReLU and Sigmoid activations.
+The forward pass runs layer-by-layer:
+\begin{equation}
+    \mathbf{A}^{(l)} = \mathbf{Z}^{(l-1)}\mathbf{W}^{(l)\top} + \mathbf{b}^{(l)}
+\end{equation}
+\begin{equation}
+    \mathbf{Z}^{(l)} = \sigma^{(l)}(\mathbf{A}^{(l)})
+\end{equation}
+where $\mathbf{Z}^{(0)} = \mathbf{X}$. We implemented ReLU and Sigmoid activations.
 
-For training, backpropagation propagates errors backwards using the chain rule. We update parameters using Mini-Batch Gradient Descent (batch size of 32). We also shuffle data indexes before each epoch so the network doesn't get stuck in repetitive loops. 
+For training, backpropagation propagates errors backward using the chain rule. We update parameters using Mini-Batch Gradient Descent (batch size = 32). We shuffle the training indices before each epoch to keep the gradients fresh.
 
-We used two loss metrics:
+We implement two loss functions:
 \begin{itemize}
-    \item \textbf{Mean Squared Error (MSE):} For regression.
-    \item \textbf{Categorical Cross-Entropy:} For classification. We added a tiny offset ($\epsilon = 10^{-9}$) to avoid log-zero errors.
+    \item \textbf{Mean Squared Error (MSE):} Used for regression.
+    \item \textbf{Categorical Cross-Entropy (CE):} Used for classification. We add a tiny offset ($\epsilon = 10^{-9}$) to prevent numerical blowups in the log.
 \end{itemize}
 
 \subsection{K-Means Clustering}
-K-Means is unsupervised, so we had to get creative to use it for classification. The algorithm groups our 13 features into $K$ clusters. We initialize centroids by picking random data points. We assign points to the nearest centroid using Euclidean distance: $d(\mathbf{x}, \mathbf{c}) = \|\mathbf{x} - \mathbf{c}\|_2$. Centroids are recalculated as the mean of their assigned points. If a cluster goes empty, we jumpstart it by picking a new random point. 
+K-Means groups features into $K$ clusters. We initialize centroids by grabbing random points from the data. Points are assigned to the nearest centroid using Euclidean distance. Centroids are updated as the mean of their assigned points. Empty clusters are resolved by selecting a random data point as the new centroid.
 
-To classify, we assign each cluster a label based on the majority vote of the true labels of training points inside it. For predictions, test points just take the label of their nearest cluster center. It is surprisingly simple and works!
+For classification, we assign a label to each centroid by majority vote of the true labels in its cluster. A new test point gets the label of its nearest cluster center.
 
 \section{Experiments and Results}
 
 \subsection{K-Means Clustering}
-We ran a parameter sweep for $K$ values from 1 to 20 to see how cluster count affects performance.
+We swept $K$ from 1 to 20 on the validation set. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{kmeans_sweep.png}
-    \caption{K-Means validation scores vs. $K$}
+    \includegraphics[width=0.88\linewidth]{kmeans_sweep.png}
+    \caption{K-Means performance vs. cluster size $K$}
 \end{figure}
 
-The best accuracy was at $K=5$, getting 73.12\% validation accuracy, though Macro F1 was quite poor (0.4172). However, when we pushed $K$ to 18, the Macro F1 shot up to 0.5943, even though accuracy dropped slightly to 70.94\%. This was a real eye-opener! Having more clusters allows the model to capture minority classes instead of letting them get drowned out in majority votes.
+The accuracy peaked at $K=5$, reaching 73.12\% with a Macro F1 score of 0.4172. But we noticed a really cool trade-off! At $K=18$, the accuracy dropped slightly to 70.94\%, but the Macro F1 score shot up to 0.5943. It turns out more clusters let the model represent minority groups instead of letting them get outvoted. Quite neat!
 
-\subsection{MLP Tuning (Classification and Regression)}
-Next up was tuning the MLP (64 hidden units). We ran a grid search for learning rates ($lr$) and training epochs for both tasks.
+\subsection{MLP Classification}
+We tested learning rates $lr \in [10^{-4}, 0.5]$ and epochs $\in [50, 500]$ with a 64-neuron hidden layer.
 
-For classification (ReLU/Sigmoid activations), the best run hit 76.56\% accuracy (F1: 0.4541) at $lr=0.01$ and 500 epochs (see Fig 1, left). We noticed that tiny learning rates ($lr=10^{-4}$) converged at a snail's pace. On the flip side, a high learning rate ($lr=0.5$) made the gradients go haywire, resulting in worse accuracy.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{mlp_class_heatmap.png}
+    \caption{MLP Classification Accuracy Heatmap}
+\end{figure}
 
-For regression (ReLU/ReLU activations), our default settings ($lr=10^{-5}$, 100 epochs) got a validation MSE of 5.2136. After sweeping the parameters, we found a sweet spot at $lr=0.001$ and 200 epochs. This dropped our validation MSE to a fantastic 1.1500! (see Fig 1, right). Going higher than $lr=0.01$ caused the model to overfit or diverge.
+We hit the jackpot at $lr=0.01$ and 500 epochs, scoring a sweet 76.56\% validation accuracy (F1 = 0.4541). High learning rates like 0.5 were all over the place, while a low $lr=10^{-4}$ was slow as molasses.
+
+\subsection{MLP Regression}
+We tuned the regressor on the continuous addiction score task.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{mlp_reg_heatmap.png}
+    \caption{MLP Regression MSE Heatmap (Lower is Better)}
+\end{figure}
+
+Our default baseline ($lr=10^{-5}$, 100 epochs) got a validation MSE of 5.2136. Tuning made a massive difference! We achieved a solid validation MSE of 1.1500 at $lr=0.001$ and 200 epochs. Going up to $lr=0.01$ or higher caused the model to overfit and go off the rails.
 
 \subsection{Summary of Results}
-Table 1 compares our best configurations for each approach.
+The table below displays the final performance of our optimized Milestone 2 models.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
-\resizebox{\columnwidth}{!}{%
+\resizebox{0.9\columnwidth}{!}{%
 \begin{tabular}{lll}
 \toprule
 Task & Model (Parameters) & Performance \\
@@ -89,20 +103,14 @@ Regression & MLP ($lr=0.001$, ep=200) & MSE: 1.1500 \\
 \end{table}
 
 \section{Extensions}
-To make our pipeline more robust, we added a few cool features:
+We tried three extra extensions to squeeze more juice out of our pipeline:
 \begin{itemize}
-    \item \textbf{Categorical Cross-Entropy:} We expanded binary cross-entropy to handle multi-class labels natively, adding a stability buffer ($\epsilon=10^{-9}$) to avoid log-zero errors.
-    \item \textbf{Deep MLP exploration:} We tried a two-hidden-layer network $(D, 64, 32, C)$. Surprisingly, it did not help! Validation accuracy dropped slightly, probably because the extra parameters overfit our small dataset.
-    \item \textbf{Random Batch Shuffling:} We shuffled data indexes at each epoch. This randomizes batch composition and prevents cyclic gradient paths.
+    \item \textbf{Categorical Cross-Entropy from Scratch:} We implemented multi-class cross-entropy and its gradient vectorization from scratch.
+    \item \textbf{Deep MLP Architectures:} We tested a deep network configuration of $(D, 64, 32, C)$. Surprisingly, it did not help much and overfit the training set.
+    \item \textbf{Mini-Batch Shuffling:} Shuffling the data indices before each epoch prevented the network from getting stuck in cyclic gradient updates.
 \end{itemize}
 
 \section{Discussion and Conclusion}
-Coding these methods was a fantastic learning experience. 
-
-For regression, our tuned MLP reached an MSE of 1.1500. This shows how powerful non-linear neural nets can be when handling complex relationships. 
-
-For classification, the supervised MLP outperformed the unsupervised K-Means clustering (76.56\% vs 73.12\%). This makes sense because the MLP is directly guided by the true labels. 
-
-Overall, parametric models are a big step up from Milestone 1 baselines. But hyperparameter tuning is absolutely critical to avoid slow learning or numerical instability!
+We successfully implemented and tuned all methods. For regression, the MLP achieved a solid 1.1500 MSE. Non-linear mapping is definitely the way to go here. For classification, MLP beat K-Means (76.56\% vs 73.12\%). Supervised models have a clear edge since they know the target labels. In conclusion, tuning was a game-changer! We are super proud of these results and look forward to Milestone 3!
 
 \end{document}

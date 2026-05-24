@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -214,15 +214,15 @@ LaTeX Font Info:    ... okay on input line 13.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(54.2025pt, 505.89pt, 54.2025pt)
-* v-part:(T,H,B)=(54.2025pt, 686.56499pt, 54.2025pt)
+* h-part:(L,W,R)=(50.58878pt, 513.11745pt, 50.58878pt)
+* v-part:(T,H,B)=(50.58878pt, 693.79243pt, 50.58878pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=505.89pt
-* \textheight=686.56499pt
-* \oddsidemargin=-18.06749pt
-* \evensidemargin=-18.06749pt
-* \topmargin=-55.06749pt
+* \textwidth=513.11745pt
+* \textheight=693.79243pt
+* \oddsidemargin=-21.68121pt
+* \evensidemargin=-21.68121pt
+* \topmargin=-58.68121pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
@@ -266,38 +266,26 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<mlp_class_heatmap.png, id=1, 578.16pt x 433.62pt>
-File: mlp_class_heatmap.png Graphic file (type png)
-<use mlp_class_heatmap.png>
-Package pdftex.def Info: mlp_class_heatmap.png  used on input line 19.
-(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
-<mlp_reg_heatmap.png, id=3, 578.16pt x 433.62pt>
-File: mlp_reg_heatmap.png Graphic file (type png)
-<use mlp_reg_heatmap.png>
-Package pdftex.def Info: mlp_reg_heatmap.png  used on input line 21.
-(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
-<kmeans_sweep.png, id=4, 578.16pt x 397.485pt>
+<kmeans_sweep.png, id=1, 578.16pt x 397.485pt>
 File: kmeans_sweep.png Graphic file (type png)
 <use kmeans_sweep.png>
-Package pdftex.def Info: kmeans_sweep.png  used on input line 58.
-(pdftex.def)             Requested size: 185.95874pt x 127.84676pt.
+Package pdftex.def Info: kmeans_sweep.png  used on input line 57.
+(pdftex.def)             Requested size: 221.3729pt x 152.19217pt.
+<mlp_class_heatmap.png, id=3, 578.16pt x 433.62pt>
+File: mlp_class_heatmap.png Graphic file (type png)
+<use mlp_class_heatmap.png>
+Package pdftex.def Info: mlp_class_heatmap.png  used on input line 68.
+(pdftex.def)             Requested size: 213.82643pt x 160.3641pt.
  [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-]
-Underfull \vbox (badness 4699) has occurred while \output is active []
-
-
-Underfull \hbox (badness 3158) in paragraph at lines 104--105
-[]\OT1/cmr/m/n/10.95 For clas-si-fi-ca-tion, the su-per-vised MLP out-
- []
-
-
-Underfull \hbox (badness 1478) in paragraph at lines 104--105
-\OT1/cmr/m/n/10.95 per-formed the un-su-per-vised K-Means clus-ter-ing
- []
-
-[2 <./mlp_class_heatmap.png> <./mlp_reg_heatmap.png> <./kmeans_sweep.png>]
+ <./kmeans_sweep.png>]
+<mlp_reg_heatmap.png, id=20, 578.16pt x 433.62pt>
+File: mlp_reg_heatmap.png Graphic file (type png)
+<use mlp_reg_heatmap.png>
+Package pdftex.def Info: mlp_reg_heatmap.png  used on input line 79.
+(pdftex.def)             Requested size: 213.82643pt x 160.3641pt.
+ [2 <./mlp_class_heatmap.png> <./mlp_reg_heatmap.png>]
 (./report.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -305,13 +293,13 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4108 strings out of 469006
- 68195 string characters out of 5454813
- 484912 words of memory out of 5000000
- 32793 multiletter control sequences out of 15000+600000
+ 4109 strings out of 469006
+ 68197 string characters out of 5454813
+ 481925 words of memory out of 5000000
+ 32794 multiletter control sequences out of 15000+600000
  636133 words of font info for 69 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 57i,10n,65p,488b,399s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,429b,390s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/tingwen/Library/texlive/2026basic/texmf-var/fonts/pk/ljfour/jknappen
 /ec/tcrm1095.600pk></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
@@ -323,7 +311,7 @@ onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (2 pages, 678478 bytes).
+Output written on report.pdf (2 pages, 677098 bytes).
 PDF statistics:
  68 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
