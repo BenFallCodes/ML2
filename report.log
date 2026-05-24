@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -188,8 +188,7 @@ Package caption Info: float package is loaded.
 ef
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count305
-)
-No file report.aux.
+) (./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
@@ -206,6 +205,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -266,31 +266,38 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<kmeans_sweep.png, id=1, 578.16pt x 397.485pt>
+<mlp_class_heatmap.png, id=1, 578.16pt x 433.62pt>
+File: mlp_class_heatmap.png Graphic file (type png)
+<use mlp_class_heatmap.png>
+Package pdftex.def Info: mlp_class_heatmap.png  used on input line 19.
+(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
+<mlp_reg_heatmap.png, id=3, 578.16pt x 433.62pt>
+File: mlp_reg_heatmap.png Graphic file (type png)
+<use mlp_reg_heatmap.png>
+Package pdftex.def Info: mlp_reg_heatmap.png  used on input line 21.
+(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
+<kmeans_sweep.png, id=4, 578.16pt x 397.485pt>
 File: kmeans_sweep.png Graphic file (type png)
 <use kmeans_sweep.png>
-Package pdftex.def Info: kmeans_sweep.png  used on input line 65.
-(pdftex.def)             Requested size: 247.94499pt x 170.46033pt.
-
-Underfull \vbox (badness 1383) has occurred while \output is active []
-
+Package pdftex.def Info: kmeans_sweep.png  used on input line 58.
+(pdftex.def)             Requested size: 185.95874pt x 127.84676pt.
  [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-<mlp_class_heatmap.png, id=18, 578.16pt x 433.62pt>
-File: mlp_class_heatmap.png Graphic file (type png)
-<use mlp_class_heatmap.png>
-Package pdftex.def Info: mlp_class_heatmap.png  used on input line 76.
-(pdftex.def)             Requested size: 235.54698pt x 176.66054pt.
-<mlp_reg_heatmap.png, id=19, 578.16pt x 433.62pt>
-File: mlp_reg_heatmap.png Graphic file (type png)
-<use mlp_reg_heatmap.png>
-Package pdftex.def Info: mlp_reg_heatmap.png  used on input line 87.
-(pdftex.def)             Requested size: 235.54698pt x 176.66054pt.
- [2 <./kmeans_sweep.png> <./mlp_class_heatmap.png> <./mlp_reg_heatmap.png>] [3
+Underfull \vbox (badness 4699) has occurred while \output is active []
 
-]
+
+Underfull \hbox (badness 3158) in paragraph at lines 104--105
+[]\OT1/cmr/m/n/10.95 For clas-si-fi-ca-tion, the su-per-vised MLP out-
+ []
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 104--105
+\OT1/cmr/m/n/10.95 per-formed the un-su-per-vised K-Means clus-ter-ing
+ []
+
+[2 <./mlp_class_heatmap.png> <./mlp_reg_heatmap.png> <./kmeans_sweep.png>]
 (./report.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -299,12 +306,12 @@ L3 programming layer <2026-01-19>
  ) 
 Here is how much of TeX's memory you used:
  4108 strings out of 469006
- 68214 string characters out of 5454813
- 481921 words of memory out of 5000000
- 32795 multiletter control sequences out of 15000+600000
+ 68195 string characters out of 5454813
+ 484912 words of memory out of 5000000
+ 32793 multiletter control sequences out of 15000+600000
  636133 words of font info for 69 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 57i,10n,65p,449b,390s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,488b,399s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/tingwen/Library/texlive/2026basic/texmf-var/fonts/pk/ljfour/jknappen
 /ec/tcrm1095.600pk></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
@@ -316,10 +323,10 @@ onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (3 pages, 681904 bytes).
+Output written on report.pdf (2 pages, 678478 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 68 PDF objects out of 1000 (max. 8388607)
+ 38 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
