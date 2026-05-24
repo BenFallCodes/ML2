@@ -16,7 +16,16 @@ class MLP:
         activations = (      Sigmoid,      Sigmoid)
         """
 
-        ### WRITE YOUR CODE HERE
+        self.n_layers = len(dimensions)
+        self.w = {}
+        self.b = {}
+        self.activations = {}
+        self.learning_rate = None
+
+        for l in range(1, self.n_layers):
+            self.w[l] = np.random.randn(dimensions[l], dimensions[l-1]) / np.sqrt(dimensions[l - 1])
+            self.b[l] = np.zeros(dimensions[l])
+            self.activations[l] = activations[l-1]
 
     def feed_forward(self, x):
         """
@@ -25,7 +34,12 @@ class MLP:
         :return: (tpl) Node outputs and activations per layer. The numbering of the output is equivalent to the layer numbers.
         """
 
-        ### WRITE YOUR CODE HERE
+        a = {}
+        z = {0: x}
+        for l in range(1, self.n_layers):
+            a[l] = np.dot(z[l-1], self.w[l].T) + self.b[l]
+            z[l] = self.activations[l].forward(a[l])
+        return a, z
 
 
     def predict(self, x):
@@ -34,7 +48,8 @@ class MLP:
         :return: (array) A 2D array of shape (n_cases, n_classes).
         """
 
-        ### WRITE YOUR CODE HERE
+        _, z = self.feed_forward(x)
+        return z[self.n_layers - 1]
 
 
     def back_prop(self, z, a, y_true, loss):
@@ -51,7 +66,22 @@ class MLP:
         :return:
         """
 
-        ### WRITE YOUR CODE HERE
+        y_pred = z[self.n_layers - 1]
+        delta = loss.gradient(y_true, y_pred) * self.activations[self.n_layers - 1].gradient(a[self.n_layers - 1])
+        
+        dw = np.dot(delta.T, z[self.n_layers - 2])
+
+        update_params = {
+            self.n_layers - 1: (dw, delta)
+        }
+
+        for l in reversed(range(1, self.n_layers - 1)):
+            delta = np.dot(delta, self.w[l+1]) * self.activations[l].gradient(a[l])
+            dw = np.dot(delta.T, z[l - 1])
+            update_params[l] = (dw, delta)
+        
+        for k, v in update_params.items():
+            self.update_w_b(k, v[0], v[1])
 
 
     def update_w_b(self, index, dw, delta):
@@ -62,7 +92,8 @@ class MLP:
         :param delta: (array) Delta error.
         """
 
-        ### WRITE YOUR CODE HERE
+        self.w[index] -= self.learning_rate * dw
+        self.b[index] -= self.learning_rate * np.sum(delta, 0)
 
     def fit(self, x, y_true, loss, epochs, batch_size, learning_rate=1e-3):
         """
@@ -74,4 +105,18 @@ class MLP:
         :param learning_rate: (flt)
         """
 
-        ### WRITE YOUR CODE HERE
+        if not x.shape[0] == y_true.shape[0]:
+            raise ValueError("Length of x and y arrays don't match")
+        self.learning_rate = learning_rate
+
+        for i in range(epochs):
+            indices = np.arange(x.shape[0])
+            np.random.shuffle(indices)
+            x_ = x[indices]
+            y_ = y_true[indices]
+
+            for j in range(x.shape[0] // batch_size):
+                k = j * batch_size
+                l = (j + 1) * batch_size
+                a, z = self.feed_forward(x_[k:l])
+                self.back_prop(z, a, y_[k:l], loss)
