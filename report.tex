@@ -16,16 +16,16 @@
 
 \begin{figure*}[htbp]
     \centering
-    \includegraphics[width=0.42\textwidth]{mlp_class_heatmap.png}
+    \includegraphics[width=0.44\textwidth]{mlp_class_heatmap.png}
     \hfill
-    \includegraphics[width=0.42\textwidth]{mlp_reg_heatmap.png}
+    \includegraphics[width=0.44\textwidth]{mlp_reg_heatmap.png}
     \caption{MLP validation performance: Classification Accuracy (left) and Regression MSE (right)}
 \end{figure*}
 
 \section{Introduction}
 We are back with the Gaming and Mental Health dataset! Quick recap: we have 2,000 samples total, keeping 1,600 for training and 400 for testing. 
 
-Our two tasks remain the same. First, we predict the continuous addiction score (0 to 10). Second, we classify players into Low, Medium, or High addiction levels. For this milestone, we ditch the simple models from Milestone 1 and build a Multi-Layer Perceptron (MLP) and a K-Means clustering algorithm from scratch.
+Our two tasks remain the same. First, we predict the continuous addiction score (0 to 10). Second, we classify players into Low, Medium, or High addiction levels. For this milestone, we ditch the simple models from Milestone 1 and build a Multi-Layer Perceptron (MLP) and a K-Means clustering algorithm from scratch. We had a total blast coding these up and playing with their settings!
 
 \section{Methods}
 We prepared the data by normalising it with the mean and standard deviation of our training set. To avoid cheating (data leakage!), we carved out an 80/20 train/validation split from our 1,600 training samples. This left us with 1,280 samples for training and 320 for validation.
@@ -55,7 +55,7 @@ We ran a parameter sweep for $K$ values from 1 to 20 to see how cluster count af
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.68\linewidth]{kmeans_sweep.png}
+    \includegraphics[width=0.75\linewidth]{kmeans_sweep.png}
     \caption{K-Means validation scores vs. $K$}
 \end{figure}
 
@@ -89,11 +89,10 @@ Regression & MLP ($lr=0.001$, ep=200) & MSE: 1.1500 \\
 \end{table}
 
 \section{Extensions}
-To make our pipeline more robust, we implemented several advanced techniques:
+To make our pipeline more robust, we added a few cool features:
 \begin{itemize}
-    \item \textbf{K-Means++ Initialization:} Instead of pure random selection, we implemented K-Means++ choosing initial centroids proportional to their squared distance to the nearest existing center. This helps standard K-Means avoid poor local optima.
     \item \textbf{Categorical Cross-Entropy:} We expanded binary cross-entropy to handle multi-class labels natively, adding a stability buffer ($\epsilon=10^{-9}$) to avoid log-zero errors.
-    \item \textbf{Deep MLP Architectures:} We tried a two-hidden-layer network $(D, 64, 32, C)$. Surprisingly, it did not help! Validation accuracy dropped slightly, probably because the extra parameters overfit our small dataset.
+    \item \textbf{Deep MLP exploration:} We tried a two-hidden-layer network $(D, 64, 32, C)$. Surprisingly, it did not help! Validation accuracy dropped slightly, probably because the extra parameters overfit our small dataset.
     \item \textbf{Random Batch Shuffling:} We shuffled data indexes at each epoch. This randomizes batch composition and prevents cyclic gradient paths.
 \end{itemize}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -270,27 +270,30 @@ Package caption Info: End \AtBeginDocument code.
 File: mlp_class_heatmap.png Graphic file (type png)
 <use mlp_class_heatmap.png>
 Package pdftex.def Info: mlp_class_heatmap.png  used on input line 19.
-(pdftex.def)             Requested size: 212.47287pt x 159.35178pt.
+(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
 <mlp_reg_heatmap.png, id=3, 578.16pt x 433.62pt>
 File: mlp_reg_heatmap.png Graphic file (type png)
 <use mlp_reg_heatmap.png>
 Package pdftex.def Info: mlp_reg_heatmap.png  used on input line 21.
-(pdftex.def)             Requested size: 212.47287pt x 159.35178pt.
+(pdftex.def)             Requested size: 222.59283pt x 166.9409pt.
 <kmeans_sweep.png, id=4, 578.16pt x 397.485pt>
 File: kmeans_sweep.png Graphic file (type png)
 <use kmeans_sweep.png>
 Package pdftex.def Info: kmeans_sweep.png  used on input line 58.
-(pdftex.def)             Requested size: 168.60077pt x 115.9106pt.
+(pdftex.def)             Requested size: 185.95874pt x 127.84676pt.
  [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 3158) in paragraph at lines 105--106
+Underfull \vbox (badness 4699) has occurred while \output is active []
+
+
+Underfull \hbox (badness 3158) in paragraph at lines 104--105
 []\OT1/cmr/m/n/10.95 For clas-si-fi-ca-tion, the su-per-vised MLP out-
  []
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 105--106
+Underfull \hbox (badness 1478) in paragraph at lines 104--105
 \OT1/cmr/m/n/10.95 per-formed the un-su-per-vised K-Means clus-ter-ing
  []
 
@@ -304,7 +307,7 @@ L3 programming layer <2026-01-19>
 Here is how much of TeX's memory you used:
  4108 strings out of 469006
  68195 string characters out of 5454813
- 483912 words of memory out of 5000000
+ 484912 words of memory out of 5000000
  32793 multiletter control sequences out of 15000+600000
  636133 words of font info for 69 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
@@ -320,7 +323,7 @@ onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (2 pages, 679355 bytes).
+Output written on report.pdf (2 pages, 678478 bytes).
 PDF statistics:
  68 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
