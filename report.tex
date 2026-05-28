@@ -17,13 +17,13 @@
 \section{Introduction}
 Same as Milestone 1, with the Gaming and Mental Health dataset, we have 2,000 samples total, keeping 1,600 for training and 400 for testing. We want to predict two targets. First, we predict the continuous addiction score (0 to 10). Second, we classify the general addiction level into Low, Medium, or High.
 
-In this milestone, we implement a Multi-Layer Perceptron (MLP) from scratch for both tasks. We also implement K-Means clustering for classification. Exploring how these models behave on our dataset was very insightful.
+In this milestone, we implement a Multi-Layer Perceptron (MLP) from scratch for both tasks. We also implement K-Means clustering for classification.
 
 \section{Methods}
-We prepared the data by applying standard z-score normalization. We calculated means and standard deviations from the training set only. To avoid data leakage, we split our 1,600 training samples into an 80/20 train/validation split. This leaves 1,280 samples for training and 320 for local tuning.
+We prepared the data by applying standard z-score normalisation. We calculated means and standard deviations from the training set only. To avoid data leakage, we split our 1,600 training samples into an 80/20 train/validation split. This leaves 1,280 samples for training and 320 for local tuning.
 
 \subsection{Multi-Layer Perceptron (MLP)}
-Our MLP is built completely from scratch. The network supports arbitrary hidden layers. We initialize weights using a normal distribution scaled by $1 / \sqrt{I}$, where $I$ is the input dimension. Biases start at zero.
+Our MLP is built completely from scratch. The network supports arbitrary hidden layers. We initialise weights using a normal distribution scaled by $1 / \sqrt{I}$, where $I$ is the input dimension. Biases start at zero.
 
 The forward pass runs layer-by-layer:
 \begin{equation}
@@ -34,16 +34,16 @@ The forward pass runs layer-by-layer:
 \end{equation}
 where $\mathbf{Z}^{(0)} = \mathbf{X}$. We implemented ReLU and Sigmoid activations.
 
-For training, backpropagation propagates errors backward using the chain rule. We update parameters using Mini-Batch Gradient Descent (batch size = 32). We shuffle the training indices before each epoch to keep the gradients fresh.
+For training, backpropagation propagates errors backward using the chain rule. We optimise parameters using Mini-Batch Gradient Descent (batch size = 32). We shuffle the training indices before each iteration to keep the gradients fresh.
 
 We implement two loss functions:
 \begin{itemize}
     \item \textbf{Mean Squared Error (MSE):} Used for regression.
-    \item \textbf{Categorical Cross-Entropy (CE):} Used for classification. We add a tiny offset ($\epsilon = 10^{-9}$) to prevent numerical blowups in the log.
+    \item \textbf{Cross-Entropy (CE):} Used for classification. We add a tiny offset ($\epsilon = 10^{-9}$) to prevent numerical blowups in the log.
 \end{itemize}
 
 \subsection{K-Means Clustering}
-K-Means groups features into $K$ clusters. We initialize centroids by grabbing random points from the data. Points are assigned to the nearest centroid using Euclidean distance. Centroids are updated as the mean of their assigned points. Empty clusters are resolved by selecting a random data point as the new centroid.
+K-Means groups features into $K$ clusters. We initialise centroids by grabbing random points from the data. Points are assigned to the nearest centroid using Euclidean distance. Centroids are updated as the mean of their assigned points. Empty clusters are resolved by selecting a random data point as the new centroid.
 
 For classification, we assign a label to each centroid by majority vote of the true labels in its cluster. A new test point gets the label of its nearest cluster center.
 
@@ -61,7 +61,7 @@ We swept $K$ from 1 to 20 on the validation set.
 The accuracy peaked at $K=5$, reaching 73.12\% with a Macro F1 score of 0.4172. We observed an interesting trade-off. At $K=18$, the accuracy dropped slightly to 70.94\%, but the Macro F1 score rose to 0.5943. More clusters allow the model to represent minority groups instead of letting them get outvoted. This was a useful finding.
 
 \subsection{MLP Classification}
-We tested our MLP classifier (hidden size = 64, learning rate $lr=0.01$) across epochs $\in [50, 500]$ to compare standard SGD against our Momentum implementation ($\gamma = 0.9$).
+We tested our MLP classifier (hidden size = 64, learning rate $lr=0.01$) across iterations $\in [50, 500]$ to compare standard SGD against our Momentum implementation ($\gamma = 0.9$).
 
 \begin{figure}[H]
     \centering
@@ -69,7 +69,7 @@ We tested our MLP classifier (hidden size = 64, learning rate $lr=0.01$) across 
     \caption{MLP Classification: SGD vs Momentum Validation Accuracy}
 \end{figure}
 
-Momentum reached a validation accuracy of 75.94\% at just 100 epochs. Standard SGD required a full 500 epochs to reach this same level. Momentum adds inertia to the update step. This accelerates training and dampens oscillations in narrow loss valleys.
+Momentum reached a validation accuracy of 75.94\% at just 100 iterations. Standard SGD required a full 500 iterations to reach this same level. Momentum adds inertia to the update step. This accelerates training and dampens oscillations in narrow loss valleys.
 
 \subsection{MLP Regression}
 We tuned the regressor (hidden size = 64, learning rate $lr=0.001$) on the continuous addiction score task.
@@ -80,10 +80,10 @@ We tuned the regressor (hidden size = 64, learning rate $lr=0.001$) on the conti
     \caption{MLP Regression: SGD vs Momentum Validation MSE}
 \end{figure}
 
-Tuning made a substantial difference. Standard SGD steadily converged to a validation MSE of 1.1732 at 200 epochs. Momentum was faster at the start, achieving a validation MSE of 1.2218 at 50 epochs, compared to SGD's 1.3580. However, at higher epochs, Momentum overshot the mark and diverged, and validation MSE rose to 2.0752. This illustrates a gradient descent limitation. Too much inertia pushes the parameters past the local minimum.
+Tuning made a substantial difference. Standard SGD steadily converged to a validation MSE of 1.1732 at 200 iterations. Momentum was faster at the start, achieving a validation MSE of 1.2218 at 50 iterations, compared to SGD's 1.3580. However, at higher iterations, Momentum overshot the mark and diverged, and validation MSE rose to 2.0752. This illustrates a gradient descent limitation. Too much inertia pushes the parameters past the local minimum.
 
 \subsection{Summary of Results}
-The table below displays the final performance of our optimized Milestone 2 models.
+The table below displays the final performance of our optimised Milestone 2 models.
 
 \begin{table}[H]
 \centering
@@ -94,8 +94,8 @@ Task & Model (Parameters) & Performance \\
 \midrule
 Classification & K-Means ($K=5$) & Acc: 73.12\%, F1: 0.4172 \\
 Classification & K-Means ($K=18$) & Acc: 70.94\%, F1: 0.5943 \\
-Classification & MLP + Momentum (ep=100) & Acc: 75.94\%, F1: 0.4556 \\
-Regression & MLP + SGD (ep=200) & MSE: 1.1732 \\
+Classification & MLP + Momentum (iter=100) & Acc: 75.94\%, F1: 0.4556 \\
+Regression & MLP + SGD (iter=200) & MSE: 1.1732 \\
 \bottomrule
 \end{tabular}%
 }
@@ -105,7 +105,7 @@ Regression & MLP + SGD (ep=200) & MSE: 1.1732 \\
 \section{Extensions}
 We tried three extensions to improve our pipeline:
 \begin{itemize}
-    \item \textbf{Momentum Optimizer (Slide 69):} We added inertia to parameter updates:
+    \item \textbf{Momentum Optimiser (Lecture 9):} We added inertia to parameter updates:
       \begin{equation}
           \mathbf{v} \leftarrow \gamma \mathbf{v} + \eta \nabla R(\mathbf{W})
       \end{equation}
@@ -113,11 +113,11 @@ We tried three extensions to improve our pipeline:
           \mathbf{W} \leftarrow \mathbf{W} - \mathbf{v}
       \end{equation}
       This dampens oscillations and accelerates classification convergence.
-    \item \textbf{Categorical Cross-Entropy from Scratch:} We implemented multi-class cross-entropy and its gradient vectorization from scratch.
+    \item \textbf{Cross-Entropy Loss from Scratch:} We implemented multi-class cross-entropy and its gradient vectorisation from scratch.
     \item \textbf{Deep MLP Architectures:} We tested a deep network configuration of $(D, 64, 32, C)$. It did not improve performance and overfit the training set.
 \end{itemize}
 
 \section{Discussion and Conclusion}
-We successfully implemented and tuned all methods. For regression, the MLP achieved a solid 1.1732 MSE. A non-linear mapping is well-suited here. For classification, MLP beat K-Means (75.94\% vs 73.12\%). Supervised models have a clear advantage since they optimize directly for target labels. In conclusion, adding momentum was a helpful addition for speed, but required careful tuning to avoid overshooting. We look forward to Milestone 3!
+We successfully implemented and tuned all methods. For regression, the MLP achieved a solid 1.1732 MSE. A non-linear mapping is well-suited here. For classification, MLP beat K-Means (75.94\% vs 73.12\%). Supervised models have a clear advantage since they optimise directly for target labels. In conclusion, adding momentum was a helpful addition for speed, but required careful tuning to avoid overshooting.
 
 \end{document}

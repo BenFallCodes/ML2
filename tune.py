@@ -103,7 +103,7 @@ def tune_kmeans(train_x, val_x, train_y, val_y):
 
 def compare_mlp_classification(train_x, val_x, train_y, val_y):
     print("--- Comparing SGD vs Momentum (Classification) ---")
-    epochs_list = [50, 100, 200, 500]
+    iterations_list = [50, 100, 200, 500]
     
     # Convert labels to one-hot for MLP training
     y_train_oh = np.zeros((train_y.shape[0], 3))
@@ -117,31 +117,31 @@ def compare_mlp_classification(train_x, val_x, train_y, val_y):
     D = train_x.shape[1]
     C = 3
     
-    for epochs in epochs_list:
+    for iters in iterations_list:
         # SGD (momentum = 0.0)
         mlp_sgd = MLP(dimensions=(D, 64, C), activations=(ReLU, Sigmoid))
-        mlp_sgd.fit(train_x, y_train_oh, loss=CrossEntropy, epochs=epochs, batch_size=32, learning_rate=lr, momentum=0.0)
+        mlp_sgd.fit(train_x, y_train_oh, loss=CrossEntropy, epochs=iters, batch_size=32, learning_rate=lr, momentum=0.0)
         preds_sgd = mlp_sgd.predict(val_x)
         acc_sgd.append(accuracy_fn(np.argmax(preds_sgd, axis=1), val_y))
         
         # Momentum (momentum = 0.9)
         mlp_mom = MLP(dimensions=(D, 64, C), activations=(ReLU, Sigmoid))
-        mlp_mom.fit(train_x, y_train_oh, loss=CrossEntropy, epochs=epochs, batch_size=32, learning_rate=lr, momentum=0.9)
+        mlp_mom.fit(train_x, y_train_oh, loss=CrossEntropy, epochs=iters, batch_size=32, learning_rate=lr, momentum=0.9)
         preds_mom = mlp_mom.predict(val_x)
         acc_momentum.append(accuracy_fn(np.argmax(preds_mom, axis=1), val_y))
         
-        print(f"Epochs: {epochs:<3d} | SGD Acc: {acc_sgd[-1]:.2f}% | Momentum Acc: {acc_momentum[-1]:.2f}%")
+        print(f"Iterations: {iters:<3d} | SGD Acc: {acc_sgd[-1]:.2f}% | Momentum Acc: {acc_momentum[-1]:.2f}%")
         
     # Generate line plot
     plt.figure(figsize=(7, 4.5))
     sns.set_theme(style="whitegrid")
-    plt.plot(epochs_list, acc_sgd, color='#d62728', marker='o', linestyle='--', linewidth=2, label='Standard SGD')
-    plt.plot(epochs_list, acc_momentum, color='#2ca02c', marker='D', linewidth=2.5, label='Momentum (γ = 0.9)')
+    plt.plot(iterations_list, acc_sgd, color='#d62728', marker='o', linestyle='--', linewidth=2, label='Standard SGD')
+    plt.plot(iterations_list, acc_momentum, color='#2ca02c', marker='D', linewidth=2.5, label='Momentum (γ = 0.9)')
     
-    plt.xlabel('Epochs', fontsize=11, fontweight='bold')
+    plt.xlabel('Iterations', fontsize=11, fontweight='bold')
     plt.ylabel('Validation Accuracy (%)', fontsize=11, fontweight='bold')
     plt.title('MLP Classification: SGD vs Momentum Convergence', fontsize=12, fontweight='bold', pad=12)
-    plt.xticks(epochs_list)
+    plt.xticks(iterations_list)
     plt.legend(loc='lower right', frameon=True, facecolor='white', framealpha=0.9)
     plt.tight_layout()
     plt.savefig('mlp_class_comparison.png', dpi=300)
@@ -151,7 +151,7 @@ def compare_mlp_classification(train_x, val_x, train_y, val_y):
 
 def compare_mlp_regression(train_x, val_x, train_y, val_y):
     print("--- Comparing SGD vs Momentum (Regression) ---")
-    epochs_list = [50, 100, 200, 500]
+    iterations_list = [50, 100, 200, 500]
     
     y_train_reg = train_y.reshape(-1, 1)
     
@@ -162,31 +162,31 @@ def compare_mlp_regression(train_x, val_x, train_y, val_y):
     
     D = train_x.shape[1]
     
-    for epochs in epochs_list:
+    for iters in iterations_list:
         # SGD (momentum = 0.0)
         mlp_sgd = MLP(dimensions=(D, 64, 1), activations=(ReLU, ReLU))
-        mlp_sgd.fit(train_x, y_train_reg, loss=MSE, epochs=epochs, batch_size=32, learning_rate=lr, momentum=0.0)
+        mlp_sgd.fit(train_x, y_train_reg, loss=MSE, epochs=iters, batch_size=32, learning_rate=lr, momentum=0.0)
         preds_sgd = mlp_sgd.predict(val_x).flatten()
         mse_sgd.append(mse_fn(preds_sgd, val_y))
         
         # Momentum (momentum = 0.9)
         mlp_mom = MLP(dimensions=(D, 64, 1), activations=(ReLU, ReLU))
-        mlp_mom.fit(train_x, y_train_reg, loss=MSE, epochs=epochs, batch_size=32, learning_rate=lr, momentum=0.9)
+        mlp_mom.fit(train_x, y_train_reg, loss=MSE, epochs=iters, batch_size=32, learning_rate=lr, momentum=0.9)
         preds_mom = mlp_mom.predict(val_x).flatten()
         mse_momentum.append(mse_fn(preds_mom, val_y))
         
-        print(f"Epochs: {epochs:<3d} | SGD MSE: {mse_sgd[-1]:.4f} | Momentum MSE: {mse_momentum[-1]:.4f}")
+        print(f"Iterations: {iters:<3d} | SGD MSE: {mse_sgd[-1]:.4f} | Momentum MSE: {mse_momentum[-1]:.4f}")
         
     # Generate line plot
     plt.figure(figsize=(7, 4.5))
     sns.set_theme(style="whitegrid")
-    plt.plot(epochs_list, mse_sgd, color='#d62728', marker='o', linestyle='--', linewidth=2, label='Standard SGD')
-    plt.plot(epochs_list, mse_momentum, color='#2ca02c', marker='D', linewidth=2.5, label='Momentum (γ = 0.9)')
+    plt.plot(iterations_list, mse_sgd, color='#d62728', marker='o', linestyle='--', linewidth=2, label='Standard SGD')
+    plt.plot(iterations_list, mse_momentum, color='#2ca02c', marker='D', linewidth=2.5, label='Momentum (γ = 0.9)')
     
-    plt.xlabel('Epochs', fontsize=11, fontweight='bold')
+    plt.xlabel('Iterations', fontsize=11, fontweight='bold')
     plt.ylabel('Validation MSE (Lower is Better)', fontsize=11, fontweight='bold')
     plt.title('MLP Regression: SGD vs Momentum Convergence', fontsize=12, fontweight='bold', pad=12)
-    plt.xticks(epochs_list)
+    plt.xticks(iterations_list)
     plt.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.9)
     plt.tight_layout()
     plt.savefig('mlp_reg_comparison.png', dpi=300)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 17:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -271,16 +271,15 @@ File: kmeans_sweep.png Graphic file (type png)
 <use kmeans_sweep.png>
 Package pdftex.def Info: kmeans_sweep.png  used on input line 57.
 (pdftex.def)             Requested size: 221.3729pt x 138.35652pt.
- [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
- <./kmeans_sweep.png>]
-<mlp_class_comparison.png, id=19, 505.89pt x 325.215pt>
+<mlp_class_comparison.png, id=3, 505.89pt x 325.215pt>
 File: mlp_class_comparison.png Graphic file (type png)
 <use mlp_class_comparison.png>
 Package pdftex.def Info: mlp_class_comparison.png  used on input line 68.
 (pdftex.def)             Requested size: 213.82643pt x 137.46274pt.
+ [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
+
+ <./kmeans_sweep.png>]
 Underfull \hbox (badness 2961) in paragraph at lines 72--73
 []\OT1/cmr/m/n/10.95 Momentum reached a val-i-da-tion ac-cu-racy of
  []
@@ -290,11 +289,6 @@ File: mlp_reg_comparison.png Graphic file (type png)
 <use mlp_reg_comparison.png>
 Package pdftex.def Info: mlp_reg_comparison.png  used on input line 79.
 (pdftex.def)             Requested size: 213.82643pt x 137.46274pt.
-
-Underfull \hbox (badness 1661) in paragraph at lines 108--109
-[]\OT1/cmr/bx/n/10.95 Momentum Op-ti-mizer (Slide 69): \OT1/cmr/m/n/10.95 We
- []
-
 [2 <./mlp_class_comparison.png> <./mlp_reg_comparison.png>] (./report.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -308,7 +302,7 @@ Here is how much of TeX's memory you used:
  32794 multiletter control sequences out of 15000+600000
  636133 words of font info for 69 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 57i,10n,65p,473b,390s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,483b,390s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/tingwen/Library/texlive/2026basic/texmf-var/fonts/pk/ljfour/jknappen
 /ec/tcrm1095.600pk></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
@@ -320,7 +314,7 @@ onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (2 pages, 557905 bytes).
+Output written on report.pdf (2 pages, 558784 bytes).
 PDF statistics:
  68 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
