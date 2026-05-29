@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  24 MAY 2026 17:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.18)  29 MAY 2026 14:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
-(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count275
 \c@section=\count276
@@ -214,23 +214,23 @@ LaTeX Font Info:    ... okay on input line 13.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(50.58878pt, 513.11745pt, 50.58878pt)
-* v-part:(T,H,B)=(50.58878pt, 693.79243pt, 50.58878pt)
+* h-part:(L,W,R)=(34.68929pt, 544.91643pt, 34.68929pt)
+* v-part:(T,H,B)=(34.68929pt, 725.59142pt, 34.68929pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=513.11745pt
-* \textheight=693.79243pt
-* \oddsidemargin=-21.68121pt
-* \evensidemargin=-21.68121pt
-* \topmargin=-58.68121pt
+* \textwidth=544.91643pt
+* \textheight=725.59142pt
+* \oddsidemargin=-37.5807pt
+* \evensidemargin=-37.5807pt
+* \topmargin=-74.5807pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
 * \marginparwidth=4.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -269,27 +269,23 @@ Package caption Info: End \AtBeginDocument code.
 <kmeans_sweep.png, id=1, 578.16pt x 361.35pt>
 File: kmeans_sweep.png Graphic file (type png)
 <use kmeans_sweep.png>
-Package pdftex.def Info: kmeans_sweep.png  used on input line 57.
-(pdftex.def)             Requested size: 221.3729pt x 138.35652pt.
+Package pdftex.def Info: kmeans_sweep.png  used on input line 36.
+(pdftex.def)             Requested size: 167.40332pt x 104.6234pt.
 <mlp_class_comparison.png, id=3, 505.89pt x 325.215pt>
 File: mlp_class_comparison.png Graphic file (type png)
 <use mlp_class_comparison.png>
-Package pdftex.def Info: mlp_class_comparison.png  used on input line 68.
-(pdftex.def)             Requested size: 213.82643pt x 137.46274pt.
+Package pdftex.def Info: mlp_class_comparison.png  used on input line 42.
+(pdftex.def)             Requested size: 167.40332pt x 107.61902pt.
+<mlp_reg_comparison.png, id=4, 505.89pt x 325.215pt>
+File: mlp_reg_comparison.png Graphic file (type png)
+<use mlp_reg_comparison.png>
+Package pdftex.def Info: mlp_reg_comparison.png  used on input line 48.
+(pdftex.def)             Requested size: 167.40332pt x 107.61902pt.
  [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./kmeans_sweep.png>]
-Underfull \hbox (badness 2961) in paragraph at lines 72--73
-[]\OT1/cmr/m/n/10.95 Momentum reached a val-i-da-tion ac-cu-racy of
- []
-
-<mlp_reg_comparison.png, id=20, 505.89pt x 325.215pt>
-File: mlp_reg_comparison.png Graphic file (type png)
-<use mlp_reg_comparison.png>
-Package pdftex.def Info: mlp_reg_comparison.png  used on input line 79.
-(pdftex.def)             Requested size: 213.82643pt x 137.46274pt.
-[2 <./mlp_class_comparison.png> <./mlp_reg_comparison.png>] (./report.aux)
+] [2 <./kmeans_sweep.png> <./mlp_class_comparison.png> <./mlp_reg_comparison.pn
+g>] (./report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -297,27 +293,30 @@ L3 programming layer <2026-01-19>
  ) 
 Here is how much of TeX's memory you used:
  4109 strings out of 469006
- 68239 string characters out of 5454813
- 481925 words of memory out of 5000000
+ 68294 string characters out of 5454813
+ 489964 words of memory out of 5000000
  32794 multiletter control sequences out of 15000+600000
- 636133 words of font info for 69 fonts, out of 8000000 for 9000
+ 634358 words of font info for 63 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 57i,10n,65p,483b,390s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,745b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/tingwen/Library/texlive/2026basic/texmf-var/fonts/pk/ljfour/jknappen
-/ec/tcrm1095.600pk></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
+/ec/tcrm1000.600pk></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026basic/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (2 pages, 558784 bytes).
+/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026basic/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026basic/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basi
+c/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026
+basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on report.pdf (2 pages, 618833 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
- 38 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
